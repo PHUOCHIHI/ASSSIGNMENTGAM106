@@ -1,0 +1,337 @@
+@model Minecraft.Models.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Minecraft Database";
+}
+
+<div class="text-center mb-4">
+    <h1 class="display-4">Welcome to Minecraft</h1>
+    <p class="lead">Minecraft Game Management System - Database Viewer</p>
+</div>
+
+<div class="row">
+    <!-- Players Section -->
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3>Người chơi (Players) - @Model.Players.Count bản ghi</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Mã người chơi</th>
+                                <th>Email</th>
+                                <th>Chế độ chơi</th>
+                                <th>Sức khỏe</th>
+                                <th>Thức ăn</th>
+                                <th>Điểm kinh nghiệm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var player in Model.Players)
+                            {
+                                <tr>
+                                    <td>@player.PlayerId</td>
+                                    <td>@player.PlayerCode</td>
+                                    <td>@player.Email</td>
+                                    <td>@player.GameMode?.Name</td>
+                                    <td>@player.Health</td>
+                                    <td>@player.Food</td>
+                                    <td>@player.ExperiencePoints</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Modes Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4>Chế độ chơi (Game Modes) - @Model.GameModes.Count bản ghi</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên</th>
+                            <th>Mô tả</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var mode in Model.GameModes)
+                        {
+                            <tr>
+                                <td>@mode.GameModeId</td>
+                                <td>@mode.Name</td>
+                                <td>@mode.Description</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Items Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h4>Vật phẩm (Items) - @Model.Items.Count bản ghi</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên</th>
+                            <th>Loại</th>
+                            <th>Giá trị</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>@item.ItemId</td>
+                                <td>@item.Name</td>
+                                <td>@item.Type</td>
+                                <td>@item.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vehicles Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h4>Phương tiện (Vehicles) - @Model.Vehicles.Count bản ghi</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên</th>
+                            <th>Loại</th>
+                            <th>Giá trị</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var vehicle in Model.Vehicles)
+                        {
+                            <tr>
+                                <td>@vehicle.VehicleId</td>
+                                <td>@vehicle.Name</td>
+                                <td>@vehicle.Type</td>
+                                <td>@vehicle.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quests Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h4>Nhiệm vụ (Quests) - @Model.Quests.Count bản ghi</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên</th>
+                            <th>Phần thưởng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var quest in Model.Quests)
+                        {
+                            <tr>
+                                <td>@quest.QuestId</td>
+                                <td>@quest.Name</td>
+                                <td>@quest.Reward</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Monsters Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h4>Quái vật (Monsters) - @Model.Monsters.Count bản ghi</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên</th>
+                            <th>Máu</th>
+                            <th>Phần thưởng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var monster in Model.Monsters)
+                        {
+                            <tr>
+                                <td>@monster.MonsterId</td>
+                                <td>@monster.Name</td>
+                                <td>@monster.Health</td>
+                                <td>@monster.Reward</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Purchases Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h4>Giao dịch mua hàng (Purchases) - @Model.Purchases.Count bản ghi</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Người chơi</th>
+                                <th>Vật phẩm</th>
+                                <th>Phương tiện</th>
+                                <th>Ngày mua</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var purchase in Model.Purchases)
+                            {
+                                <tr>
+                                    <td>@purchase.PurchaseId</td>
+                                    <td>@purchase.Player?.PlayerCode</td>
+                                    <td>@(purchase.Item?.Name ?? "-")</td>
+                                    <td>@(purchase.Vehicle?.Name ?? "-")</td>
+                                    <td>@purchase.PurchaseDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Player Quests Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4>Nhiệm vụ người chơi (Player Quests) - @Model.PlayerQuests.Count bản ghi</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Người chơi</th>
+                                <th>Nhiệm vụ</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày hoàn thành</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var pq in Model.PlayerQuests)
+                            {
+                                <tr>
+                                    <td>@pq.PlayerQuestId</td>
+                                    <td>@pq.Player?.PlayerCode</td>
+                                    <td>@pq.Quest?.Name</td>
+                                    <td>@pq.Status</td>
+                                    <td>@(pq.CompletedDate?.ToString("dd/MM/yyyy HH:mm") ?? "-")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Monster Kills Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h4>Lịch sử tiêu diệt quái vật (Monster Kills) - @Model.MonsterKills.Count bản ghi</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Người chơi</th>
+                                <th>Quái vật</th>
+                                <th>Ngày tiêu diệt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var mk in Model.MonsterKills)
+                            {
+                                <tr>
+                                    <td>@mk.MonsterKillId</td>
+                                    <td>@mk.Player?.PlayerCode</td>
+                                    <td>@mk.Monster?.Name</td>
+                                    <td>@mk.KillDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>API Endpoints</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>GET</strong> /Home/GetPlayers - Lấy danh sách người chơi</li>
+                    <li class="list-group-item"><strong>GET</strong> /Home/GetPlayer?id={id} - Lấy thông tin người chơi</li>
+                    <li class="list-group-item"><strong>POST</strong> /Home/CreatePlayer - Tạo người chơi mới</li>
+                    <li class="list-group-item"><strong>GET</strong> /Home/GetItems - Lấy danh sách vật phẩm</li>
+                    <li class="list-group-item"><strong>GET</strong> /Home/GetVehicles - Lấy danh sách phương tiện</li>
+                    <li class="list-group-item"><strong>POST</strong> /Home/PurchaseItem - Mua vật phẩm hoặc phương tiện</li>
+                    <li class="list-group-item"><strong>GET</strong> /Home/GetQuests - Lấy danh sách nhiệm vụ</li>
+                    <li class="list-group-item"><strong>POST</strong> /Home/CompleteQuest - Hoàn thành nhiệm vụ</li>
+                    <li class="list-group-item"><strong>POST</strong> /Home/KillMonster - Tiêu diệt quái vật</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
