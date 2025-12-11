@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="admin-dashboard">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="mb-1">Admin Dashboard</h1>
+            <p class="text-muted mb-0">Trang quản lý hệ thống Minecraft game backend.</p>
+        </div>
+    </div>
+
+    <div class="admin-card-grid">
+        <div class="admin-card">
+            <h3>Người chơi</h3>
+            <p>Danh sách player, chế độ chơi và điểm kinh nghiệm hiện tại.</p>
+            <a class="btn btn-primary" href="@Url.Action("Players", "Admin")">Quản lý người chơi</a>
+        </div>
+
+        <div class="admin-card">
+            <h3>Chế độ chơi</h3>
+            <p>Các chế độ game như Survival, Creative, Adventure...</p>
+            <a class="btn btn-primary" href="@Url.Action("GameModes", "Admin")">Quản lý chế độ chơi</a>
+        </div>
+
+        <div class="admin-card">
+            <h3>Vật phẩm</h3>
+            <p>Vũ khí, áo giáp, tool và item đặc biệt trong game.</p>
+            <a class="btn btn-primary" href="@Url.Action("Items", "Admin")">Quản lý vật phẩm</a>
+        </div>
+
+        <div class="admin-card">
+            <h3>Phương tiện</h3>
+            <p>Các loại ngựa, thuyền, minecart mà người chơi có thể sở hữu.</p>
+            <a class="btn btn-primary" href="@Url.Action("Vehicles", "Admin")">Quản lý phương tiện</a>
+        </div>
+
+        <div class="admin-card">
+            <h3>Giao dịch</h3>
+            <p>Lịch sử mua item và phương tiện của người chơi.</p>
+            <a class="btn btn-primary" href="@Url.Action("Purchases", "Admin")">Quản lý giao dịch</a>
+        </div>
+    </div>
+</div>

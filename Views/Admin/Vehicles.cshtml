@@ -1,0 +1,41 @@
+@model IEnumerable<Minecraft.Models.Vehicle>
+@{
+    ViewData["Title"] = "Quản lý phương tiện";
+}
+
+<h1 class="mb-4">Quản lý phương tiện</h1>
+
+<div class="mb-3 text-end">
+    <a class="btn btn-success" asp-action="CreateVehicle">Thêm phương tiện</a>
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <table class="table table-hover mb-0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Giá trị (XP)</th>
+            <th>Loại</th>
+            <th style="width: 160px;">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var v in Model)
+    {
+        <tr>
+            <td>@v.VehicleId</td>
+            <td>@v.Name</td>
+            <td>@v.Value</td>
+            <td>@v.Type</td>
+            <td>
+                <a class="btn btn-sm btn-primary me-1" asp-action="EditVehicle" asp-route-id="@v.VehicleId">Sửa</a>
+                <a class="btn btn-sm btn-danger" asp-action="DeleteVehicle" asp-route-id="@v.VehicleId">Xoá</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+        </table>
+    </div>
+</div>

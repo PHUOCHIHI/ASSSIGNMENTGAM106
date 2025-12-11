@@ -6,6 +6,119 @@
     <title>@ViewData["Title"] - Minecraft</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        body {
+            background-color: #020617;
+            color: #e5e7eb;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        header {
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .navbar {
+            margin-bottom: 1.5rem;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        header .navbar-nav {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        header .navbar-nav .nav-link {
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1400px;
+        }
+
+        .table {
+            background-color: #111827;
+            color: #e5e7eb;
+            width: 100%;
+        }
+
+        .table thead {
+            background-color: #1f2937;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #020617;
+        }
+
+        .table tbody tr:hover {
+            background-color: #1f2937;
+        }
+
+        .admin-login-form {
+            background-color: #020617;
+        }
+
+        h1, h2, h3, h4, h5 {
+            color: #f9fafb;
+        }
+
+        a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+            border-color: #1d4ed8;
+        }
+
+        .admin-dashboard {
+            margin-top: 1.5rem;
+        }
+
+        .admin-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .admin-card {
+            background-color: #020617;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid #1f2937;
+        }
+
+        .admin-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-card p {
+            color: #9ca3af;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,12 +130,20 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Admin" asp-action="Index">Admin</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="btn btn-outline-light btn-sm" asp-controller="Account" asp-action="Login">Admin Login</a>
                         </li>
                     </ul>
                 </div>

@@ -1,0 +1,29 @@
+@{
+    ViewData["Title"] = "Admin Login";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:60vh;">
+    <div class="admin-login-container w-100" style="max-width:420px;">
+        <div class="card p-4 shadow-lg admin-login-form">
+            <h2 class="text-center mb-4">Đăng nhập Admin</h2>
+
+            @if (!string.IsNullOrEmpty(ViewBag.Error as string))
+            {
+                <div class="alert alert-danger">@ViewBag.Error</div>
+            }
+
+            <form asp-action="Login" method="post">
+                @Html.AntiForgeryToken()
+                <div class="mb-3">
+                    <label class="form-label">Tài khoản</label>
+                    <input type="text" name="username" class="form-control" placeholder="admin" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mật khẩu</label>
+                    <input type="password" name="password" class="form-control" placeholder="admin123" required />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+            </form>
+        </div>
+    </div>
+</div>

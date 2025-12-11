@@ -1,0 +1,30 @@
+@model IEnumerable<Minecraft.Models.GameMode>
+@{
+    ViewData["Title"] = "Quản lý chế độ chơi";
+}
+
+<h1 class="mb-4">Quản lý chế độ chơi</h1>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <table class="table table-hover mb-0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Mô tả</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var m in Model)
+    {
+        <tr>
+            <td>@m.GameModeId</td>
+            <td>@m.Name</td>
+            <td>@m.Description</td>
+        </tr>
+    }
+    </tbody>
+        </table>
+    </div>
+</div>
