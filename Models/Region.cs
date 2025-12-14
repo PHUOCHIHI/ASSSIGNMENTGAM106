@@ -16,5 +16,7 @@ namespace Minecraft.Models
         [StringLength(500)]
         [Column(TypeName = "nvarchar(500)")]
         public string? Description { get; set; }
+
+        public virtual ICollection<Player> Players { get; set; } = new List<Player>();
     }
 }

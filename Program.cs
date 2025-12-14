@@ -6,7 +6,12 @@ using System.IO;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = null;
+        options.JsonSerializerOptions.DictionaryKeyPolicy = null;
+    });
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
@@ -42,6 +47,63 @@ using (var scope = app.Services.CreateScope())
         else
         {
             logger.LogInformation("Database đã tồn tại.");
+        }
+
+        // EnsureCreated() không tạo thêm bảng mới nếu database đã tồn tại.
+        // Vì vậy, với các bảng được thêm sau này (vd: Regions), ta tạo thủ công nếu chưa có.
+        context.Database.ExecuteSqlRaw(@"
+            CREATE TABLE IF NOT EXISTS Regions (
+                RegionId INTEGER NOT NULL CONSTRAINT PK_Regions PRIMARY KEY AUTOINCREMENT,
+                Name nvarchar(100) NOT NULL,
+                Description nvarchar(500) NULL
+            );
+        ");
+
+        context.Database.ExecuteSqlRaw(@"
+            CREATE UNIQUE INDEX IF NOT EXISTS IX_Regions_Name ON Regions (Name);
+        ");
+
+        try
+        {
+            context.Database.ExecuteSqlRaw("ALTER TABLE Players ADD COLUMN RegionId INTEGER NULL;");
+        }
+        catch
+        {
+        }
+
+        context.Database.ExecuteSqlRaw(@"
+            CREATE INDEX IF NOT EXISTS IX_Players_RegionId ON Players (RegionId);
+        ");
+
+        if (!context.Regions.Any())
+        {
+            context.Regions.AddRange(
+                new Region { Name = "Forest", Description = "Khu rừng" },
+                new Region { Name = "Desert", Description = "Sa mạc" },
+                new Region { Name = "Ocean", Description = "Đại dương" },
+                new Region { Name = "Mountains", Description = "Núi" }
+            );
+            context.SaveChanges();
+        }
+
+        var existingRegions = context.Regions.OrderBy(r => r.RegionId).ToList();
+        if (existingRegions.Count > 0)
+        {
+            var playersToAssign = context.Players
+                .Where(p => p.RegionId == null)
+                .OrderBy(p => p.PlayerId)
+                .ToList();
+
+            for (var i = 0; i < playersToAssign.Count; i++)
+            {
+                playersToAssign[i].RegionId = existingRegions[i % existingRegions.Count].RegionId;
+            }
+
+            if (playersToAssign.Count > 0)
+            {
+                context.Players.UpdateRange(playersToAssign);
+                context.SaveChanges();
+            }
         }
         
         // Seed dữ liệu nếu chưa có

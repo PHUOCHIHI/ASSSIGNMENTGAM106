@@ -39,9 +39,14 @@ namespace Minecraft.Models
         // Foreign Key
         public int GameModeId { get; set; }
 
+        public int? RegionId { get; set; }
+
         // Navigation Property
         [ForeignKey("GameModeId")]
         public virtual GameMode? GameMode { get; set; }
+
+        [ForeignKey("RegionId")]
+        public virtual Region? Region { get; set; }
 
         // Navigation Properties
         public virtual ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();

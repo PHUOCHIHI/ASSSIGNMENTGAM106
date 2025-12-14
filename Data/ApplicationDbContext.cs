@@ -11,6 +11,7 @@ namespace Minecraft.Data
         }
 
         public DbSet<Player> Players { get; set; }
+        public DbSet<Region> Regions { get; set; }
         public DbSet<GameMode> GameModes { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Quest> Quests { get; set; }
@@ -33,6 +34,12 @@ namespace Minecraft.Data
                 entity.Property(e => e.Email).IsRequired();
                 entity.Property(e => e.Password).IsRequired();
                 // SQLite không hỗ trợ check constraints, validation sẽ được xử lý ở tầng ứng dụng
+            });
+
+            modelBuilder.Entity<Region>(entity =>
+            {
+                entity.HasIndex(e => e.Name).IsUnique();
+                entity.Property(e => e.Name).IsRequired();
             });
 
             // Configure GameMode
@@ -105,6 +112,12 @@ namespace Minecraft.Data
                 .WithMany(g => g.Players)
                 .HasForeignKey(p => p.GameModeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Player>()
+                .HasOne(p => p.Region)
+                .WithMany(r => r.Players)
+                .HasForeignKey(p => p.RegionId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Purchase>()
                 .HasOne(p => p.Player)

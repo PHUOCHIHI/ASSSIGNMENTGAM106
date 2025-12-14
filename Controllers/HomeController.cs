@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Minecraft.Data;
 using Minecraft.Models;
 using Minecraft.Models.ViewModels;
+using System.Security.Cryptography;
 
 namespace Minecraft.Controllers
 {
@@ -22,7 +23,7 @@ namespace Minecraft.Controllers
         {
             var viewModel = new DashboardViewModel
             {
-                Players = await _context.Players.Include(p => p.GameMode).ToListAsync(),
+                Players = await _context.Players.Include(p => p.GameMode).Include(p => p.Region).ToListAsync(),
                 GameModes = await _context.GameModes.ToListAsync(),
                 Items = await _context.Items.ToListAsync(),
                 Vehicles = await _context.Vehicles.ToListAsync(),
@@ -57,6 +58,7 @@ namespace Minecraft.Controllers
         {
             var players = await _context.Players
                 .Include(p => p.GameMode)
+                .Include(p => p.Region)
                 .ToListAsync();
             return Json(new ResponseAPI { Success = true, Data = players });
         }
@@ -66,6 +68,7 @@ namespace Minecraft.Controllers
         {
             var player = await _context.Players
                 .Include(p => p.GameMode)
+                .Include(p => p.Region)
                 .FirstOrDefaultAsync(p => p.PlayerId == id);
             
             if (player == null)
@@ -376,7 +379,7 @@ namespace Minecraft.Controllers
 
             try
             {
-                player.Password = request.NewPassword;
+                player.Password = HashPassword(request.NewPassword);
                 _context.Players.Update(player);
                 await _context.SaveChangesAsync();
 
@@ -386,6 +389,15 @@ namespace Minecraft.Controllers
             {
                 return Json(new ResponseAPI { Success = false, Message = ex.Message });
             }
+        }
+
+        private static string HashPassword(string password)
+        {
+            const int iterations = 100000;
+            var salt = RandomNumberGenerator.GetBytes(16);
+            using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations, HashAlgorithmName.SHA256);
+            var hash = pbkdf2.GetBytes(32);
+            return iterations + "." + Convert.ToBase64String(salt) + "." + Convert.ToBase64String(hash);
         }
 
         // Y3.9: Lấy danh sách các item được mua nhiều nhất
